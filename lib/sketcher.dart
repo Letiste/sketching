@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'my_painter.dart';
@@ -14,6 +13,7 @@ class Sketcher extends StatefulWidget {
 class _SketcherState extends State<Sketcher> {
   SketchLine currentPoints = SketchLine.empty();
   List<SketchLine> previousLines = [];
+  List<SketchLine> redoLines = [];
   bool isErasing = false;
 
   void onPanStart(DragStartDetails details) {
@@ -21,6 +21,7 @@ class _SketcherState extends State<Sketcher> {
       currentPoints = currentPoints
         ..addPoint(details.globalPosition)
         ..isErasing = isErasing;
+      redoLines = [];
     });
   }
 
@@ -44,9 +45,21 @@ class _SketcherState extends State<Sketcher> {
   }
 
   void undo() {
-    setState(() {
-      previousLines = previousLines..removeLast();
-    });
+    if (previousLines.isNotEmpty) {
+      setState(() {
+        redoLines = redoLines..add(previousLines.last);
+        previousLines = previousLines..removeLast();
+      });
+    }
+  }
+
+  void redo() {
+    if (redoLines.isNotEmpty) {
+      setState(() {
+        previousLines = previousLines..add(redoLines.last);
+        redoLines = redoLines..removeLast();
+      });
+    }
   }
 
   @override
@@ -67,6 +80,7 @@ class _SketcherState extends State<Sketcher> {
               children: [
                 TextButton(onPressed: toggleErasing, child: Text(isErasing ? "Draw" : "Erase")),
                 TextButton(onPressed: undo, child: Text("Undo")),
+                TextButton(onPressed: redo, child: Text("Redo")),
               ],
             )
           ],
