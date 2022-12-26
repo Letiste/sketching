@@ -71,6 +71,14 @@ class _SketcherState extends State<Sketcher> {
     });
   }
 
+  void reset() {
+    setState(() {
+      previousLines = previousLines..clear();
+      redoLines = redoLines..clear();
+      isErasing = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -90,6 +98,7 @@ class _SketcherState extends State<Sketcher> {
                 TextButton(onPressed: toggleErasing, child: Text(isErasing ? "Draw" : "Erase")),
                 TextButton(onPressed: undo, child: Text("Undo")),
                 TextButton(onPressed: redo, child: Text("Redo")),
+                TextButton(onPressed: reset, child: Text("Reset")),
                 TextButton(onPressed: () => updateColor(Colors.blue), child: Text("Blue")),
                 TextButton(onPressed: () => updateColor(Colors.red), child: Text("Red")),
               ],
