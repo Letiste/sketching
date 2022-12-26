@@ -1,7 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:sketcher/my_painter.dart';
-import 'package:sketcher/sketch_line.dart';
+
+import 'my_painter.dart';
+import 'sketch_line.dart';
 
 class Sketcher extends StatefulWidget {
   const Sketcher({super.key});

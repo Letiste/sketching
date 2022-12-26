@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sketcher/sketch_line.dart';
+
+import 'sketch_line.dart';
 
 class MyPainter extends CustomPainter {
   final SketchLine currentPoints;

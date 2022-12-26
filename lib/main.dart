@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sketcher/sketcher.dart';
+
+import 'sketcher.dart';
 
 void main() {
   runApp(const MyApp());
