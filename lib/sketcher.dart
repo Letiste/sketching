@@ -15,11 +15,13 @@ class _SketcherState extends State<Sketcher> {
   List<SketchLine> previousLines = [];
   List<SketchLine> redoLines = [];
   bool isErasing = false;
+  Color color = Colors.red;
 
   void onPanStart(DragStartDetails details) {
     setState(() {
       currentPoints = currentPoints
         ..addPoint(details.globalPosition)
+        ..color = color
         ..isErasing = isErasing;
       redoLines = [];
     });
@@ -62,6 +64,13 @@ class _SketcherState extends State<Sketcher> {
     }
   }
 
+  void updateColor(Color newColor) {
+    setState(() {
+      isErasing = false;
+      color = newColor;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -81,6 +90,8 @@ class _SketcherState extends State<Sketcher> {
                 TextButton(onPressed: toggleErasing, child: Text(isErasing ? "Draw" : "Erase")),
                 TextButton(onPressed: undo, child: Text("Undo")),
                 TextButton(onPressed: redo, child: Text("Redo")),
+                TextButton(onPressed: () => updateColor(Colors.blue), child: Text("Blue")),
+                TextButton(onPressed: () => updateColor(Colors.red), child: Text("Red")),
               ],
             )
           ],
