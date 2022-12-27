@@ -23,7 +23,8 @@ class _SketcherState extends State<Sketcher> {
   double strokeWidth = 5;
   Offset translate = Offset.zero;
   double zoom = 100;
-
+  // Offset translateZoom = Offset.zero;
+  Offset currentCursorPosition = Offset.zero;
   double get scale => zoom / 100;
 
   void onPanStart(DragStartDetails details) {
@@ -32,7 +33,7 @@ class _SketcherState extends State<Sketcher> {
         currentPoints = SketchLine(
           points: [(details.globalPosition - translate) / scale],
           color: color,
-          strokeWidth: strokeWidth / scale,
+          scale: scale,
           isErasing: isErasing,
         );
         redoLines = [];
@@ -42,9 +43,10 @@ class _SketcherState extends State<Sketcher> {
 
   void onPanUpdate(DragUpdateDetails details) {
     if (!isDragging) {
-      setState(() {
-        currentPoints = SketchLine.from(currentPoints)..addPoint((details.globalPosition - translate) / scale);
-      });
+        setState(() {
+          currentPoints = SketchLine.from(currentPoints)..addPoint((details.globalPosition - translate) / scale);
+        });
+
     } else {
       setState(() {
         translate += details.delta;
@@ -118,6 +120,26 @@ class _SketcherState extends State<Sketcher> {
             setState(() {
               zoom += pointerSignal.scrollDelta.dy;
               zoom = max(zoom, 0);
+              // print('POINTER POSITION ${pointerSignal.localPosition}');
+              // print('SCALE $scale');
+              // print('TRANSLATE $translate');
+              // print(pointerSignal.localPosition);
+              // var invertedScale = 1 / scale;
+              // currentCursorPosition = Offset(
+              //   invertedScale * pointerSignal.localPosition.dx - invertedScale * translate.dx,
+              //   invertedScale * pointerSignal.localPosition.dx - invertedScale * translate.dx,
+              // );
+              // if (currentCursorPosition.dx != pointerSignal.localPosition.dx ||
+              //     currentCursorPosition.dy != pointerSignal.localPosition.dy) {
+              //   print("TRANSLATING ZOOM");
+              // var translateZoom = (pointerSignal.localPosition) * (scale - 1) / scale * -1;
+              // var translateZoom = (pointerSignal.localPosition - translate) / scale;
+              // translate = translateZoom;
+              //   currentCursorPosition = pointerSignal.localPosition;
+              // } else {
+              //   translateZoom = (pointerSignal.localPosition) * (scale - 1) / scale * -1;
+              //   translate = translateZoom;
+              // }
             });
           }
         },
