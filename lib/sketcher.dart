@@ -1,10 +1,11 @@
-import 'dart:math';
-
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:rxdart/streams.dart';
 
+import 'eventStreams/translate_event.dart';
+import 'eventStreams/zoom_event.dart';
 import 'my_painter.dart';
 import 'sketch_line.dart';
+import 'widgets/scroll_listener.dart';
 
 class Sketcher extends StatefulWidget {
   const Sketcher({super.key});
@@ -22,8 +23,10 @@ class _SketcherState extends State<Sketcher> {
   Color color = Colors.red;
   double strokeWidth = 5;
   Offset translate = Offset.zero;
-  double zoom = 100;
-  double get scale => zoom / 100;
+  double zoom = 1;
+  double get scale => zoom / 1;
+  dynamic stream = CombineLatestStream.combine2(
+      ZoomEvent.instance.stream, TranslateEvent.instance.stream, (zoom, translate) => [zoom, translate]);
 
   void onPanStart(DragStartDetails details) {
     print('CURSOR CANVAS POSITION: ${(details.globalPosition - translate) / scale}');
@@ -103,7 +106,7 @@ class _SketcherState extends State<Sketcher> {
 
   void focus() {
     setState(() {
-      zoom = 100;
+      zoom = 1;
       translate = Offset.zero;
     });
   }
@@ -112,19 +115,7 @@ class _SketcherState extends State<Sketcher> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.grey.shade900,
-      child: Listener(
-        behavior: HitTestBehavior.translucent,
-        onPointerSignal: (pointerSignal) {
-          if (pointerSignal is PointerScrollEvent) {
-            setState(() {
-              var cursorWindowPosition = pointerSignal.localPosition;
-              var cursorCanvasPosition = (cursorWindowPosition - translate) / scale;
-              zoom += pointerSignal.scrollDelta.dy;
-              zoom = max(zoom, 1);
-              translate = cursorWindowPosition - cursorCanvasPosition * scale;
-            });
-          }
-        },
+      child: ScrollListener(
         child: GestureDetector(
           onPanStart: onPanStart,
           onPanUpdate: onPanUpdate,
@@ -132,13 +123,20 @@ class _SketcherState extends State<Sketcher> {
           behavior: HitTestBehavior.translucent,
           child: Stack(
             children: [
-              CustomPaint(
-                painter: MyPainter(
-                  lines: [...previousLines, currentPoints],
-                  translate: translate,
-                  scale: scale,
-                ),
-              ),
+              StreamBuilder(
+                  stream: CombineLatestStream.combine2(ZoomEvent.instance.stream, TranslateEvent.instance.stream,
+                      (zoom, translate) => [zoom, translate]),
+                  builder: (context, snapshot) {
+                    final zoom = snapshot.data?.first as double?;
+                    final translate = snapshot.data?.last as Offset?;
+                    return CustomPaint(
+                      painter: MyPainter(
+                        lines: [...previousLines, currentPoints],
+                        translate: translate ?? Offset.zero,
+                        scale: zoom ?? 1,
+                      ),
+                    );
+                  }),
               Row(
                 children: [
                   TextButton(onPressed: toggleErasing, child: Text(isErasing ? "Draw" : "Erase")),

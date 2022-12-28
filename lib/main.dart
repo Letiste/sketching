@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'sketcher.dart';
+import 'controllers/zoom_controller.dart';
 
 void main() {
+  ZoomController.instance;
   runApp(const MyApp());
 }
 
