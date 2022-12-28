@@ -26,12 +26,6 @@ class MyPainter extends CustomPainter {
       line.drawLine(canvas, paint);
     }
     canvas.restore();
-    // var sc = 1.2;
-    // canvas.drawCircle(Offset(300, 300), 50, paint..strokeWidth = 5);
-    // canvas.scale(sc);
-    // canvas.translate(50, 40);
-    // canvas.translate(-300 * (sc - 1) / sc, -300 * (sc - 1) / sc);
-    // canvas.drawCircle(Offset(300, 300), 50, paint..strokeWidth = 5);
   }
 
   @override
