@@ -3,6 +3,7 @@ import 'package:rxdart/streams.dart';
 import 'package:sketcher/eventStreams/actions/focus_event.dart';
 import 'package:sketcher/eventStreams/actions/reset_event.dart';
 import 'package:sketcher/eventStreams/current_points_event.dart';
+import 'package:sketcher/shortcuts_mapping.dart';
 import 'eventStreams/actions/redo_event.dart';
 import 'eventStreams/actions/undo_event.dart';
 import 'eventStreams/cursor_state_event.dart';
@@ -15,7 +16,6 @@ import 'widgets/pan_listener.dart';
 import 'widgets/scroll_listener.dart';
 
 class Sketcher extends StatelessWidget {
-
   final dynamic stream = CombineLatestStream.combine3(
     ZoomEvent.instance.stream,
     TranslationEvent.instance.stream,
@@ -59,13 +59,15 @@ class Sketcher extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.grey.shade900,
-      child: ScrollListener(
-        child: PanListener(
-          child: Stack(
-            children: [
-              StreamBuilder<List>(
+    return CallbackShortcuts(
+      bindings: ShortcutsMapping.shortcutsMapping,
+      child: Focus(
+        autofocus: true,
+        child: ScrollListener(
+          child: PanListener(
+            child: Container(
+              color: Colors.grey.shade900,
+              child: StreamBuilder<List>(
                   stream: stream,
                   builder: (context, snapshot) {
                     var zoom = 1.0;
@@ -76,7 +78,6 @@ class Sketcher extends StatelessWidget {
                       translation = snapshot.data![1] as Offset;
                       currentPoint = snapshot.data![2] as List<SketchLine>;
                     }
-                    print('TRANSLATION: ${currentPoint.length}');
                     return CustomPaint(
                       painter: MyPainter(
                         lines: currentPoint,
@@ -85,29 +86,7 @@ class Sketcher extends StatelessWidget {
                       ),
                     );
                   }),
-              Row(
-                children: [
-                  TextButton(onPressed: toggleDrawing, child: Text("Draw")),
-                  TextButton(onPressed: toggleErasing, child: Text("Erase")),
-                  TextButton(onPressed: toggleDragging, child: Text("Drag")),
-                  TextButton(onPressed: undo, child: Text("Undo")),
-                  TextButton(onPressed: redo, child: Text("Redo")),
-                  TextButton(onPressed: reset, child: Text("Reset")),
-                  TextButton(onPressed: () => updateColor(Colors.blue), child: Text("Blue")),
-                  TextButton(onPressed: () => updateColor(Colors.red), child: Text("Red")),
-                  TextButton(onPressed: focus, child: Text("Focus")),
-                  // StreamBuilder(
-                  //     stream: CurrentPointsEvent.instance.stream,
-                  //     builder: (context, snapshot) {
-                  //       print("PANSTATE");
-                  //       if (snapshot.hasData) {
-                  //         return Text('${snapshot.data!.last.points.length}');
-                  //       }
-                  //       return Text('toto');
-                  //     }),
-                ],
-              )
-            ],
+            ),
           ),
         ),
       ),
