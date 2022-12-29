@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:sketcher/eventStreams/mouse_position_event.dart';
 
+import '../eventStreams/mouse_button_state_event.dart';
 import '../eventStreams/scroll_event.dart';
 
 class ScrollListener extends StatelessWidget {
@@ -12,6 +14,10 @@ class ScrollListener extends StatelessWidget {
   Widget build(BuildContext context) {
     return Listener(
       behavior: HitTestBehavior.translucent,
+      onPointerHover: (event) => MousePositionEvent.instance.addEvent(event.localPosition),
+      onPointerMove: (event) => MousePositionEvent.instance.addEvent(event.localPosition),
+      onPointerDown: (event) => MouseButtonStateEvent.instance.addEvent(MouseButtonDown()),
+      onPointerUp: (event) => MouseButtonStateEvent.instance.addEvent(MouseButtonUp()),
       onPointerSignal: (pointerSignal) {
         if (pointerSignal is PointerScrollEvent) {
           ScrollEvent.instance.addEvent(pointerSignal);

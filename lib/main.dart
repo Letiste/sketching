@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:sketcher/controllers/actions/focus_controller.dart';
-import 'package:sketcher/controllers/actions/reset_controller.dart';
+import 'package:sketcher/controllers/cursor_aspect_controller.dart';
+import 'package:sketcher/controllers/focus_controller.dart';
+import 'package:sketcher/controllers/reset_controller.dart';
 import 'package:sketcher/controllers/paint_controller.dart';
-import 'package:sketcher/controllers/actions/redo_controller.dart';
-import 'package:sketcher/controllers/actions/undo_controller.dart';
+import 'package:sketcher/controllers/redo_controller.dart';
+import 'package:sketcher/controllers/undo_controller.dart';
 import 'package:sketcher/controllers/pencil_color_controller.dart';
 import 'package:window_manager/window_manager.dart';
 import 'controllers/drag_controller.dart';
@@ -23,6 +24,7 @@ Future<void> setupWindow() async {
   await windowManager.waitUntilReadyToShow();
   await windowManager.maximize();
   await windowManager.show();
+  await windowManager.focus();
 }
 
 void setupControllers() {
@@ -35,6 +37,7 @@ void setupControllers() {
   FocusController.instance;
   ResetController.instance;
   PencilColorController.instance;
+  CursorAspectController.instance;
 }
 
 class MyApp extends StatelessWidget {

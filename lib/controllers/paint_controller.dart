@@ -24,8 +24,9 @@ class PaintController {
   }
 
   void _handleEvent(Triple<Color, double, CursorState> event) {
+    var newStrokeWidth = event.third is CursorDrawing ? 5 : 24;
     final color = event.first;
-    final strokeWidth = 5 / event.second;
+    final strokeWidth = newStrokeWidth / event.second;
     final blendMode = event.third is CursorDrawing ? BlendMode.srcOver : BlendMode.clear;
     final newPaint = Paint()
       ..style = PaintingStyle.stroke

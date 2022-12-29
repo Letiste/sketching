@@ -1,24 +1,24 @@
 import 'package:sketcher/eventStreams/redo_points_event.dart';
-import 'package:sketcher/eventStreams/actions/undo_event.dart';
 import 'package:sketcher/sketch_line.dart';
 
-import '../../eventStreams/current_points_event.dart';
+import '../eventStreams/current_points_event.dart';
+import '../eventStreams/redo_event.dart';
 
-class UndoController {
+class RedoController {
   late List<SketchLine> _currentPoints;
   late List<SketchLine> _redoPoints;
 
-  static void instance = UndoController._privateController();
+  static void instance = RedoController._privateController();
 
-  UndoController._privateController() {
+  RedoController._privateController() {
     _setupStreams();
-    UndoEvent.instance.stream.listen((_) => _handleEvent());
+    RedoEvent.instance.stream.listen((_) => _handleEvent());
   }
 
   void _handleEvent() {
-    if (_currentPoints.isNotEmpty) {
-      List<SketchLine> newPoints = List.from(_currentPoints)..removeLast();
-      List<SketchLine> newRedoPoints = List.from(_redoPoints)..add(_currentPoints.last);
+    if (_redoPoints.isNotEmpty) {
+      List<SketchLine> newPoints = List.from(_currentPoints)..add(_redoPoints.last);
+      List<SketchLine> newRedoPoints = List.from(_redoPoints)..removeLast();
       CurrentPointsEvent.instance.addEvent(newPoints);
       RedoPointsEvent.instance.addEvent(newRedoPoints);
     }

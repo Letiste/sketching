@@ -24,7 +24,7 @@ class DrawController {
   DrawController._privateController() {
     _setupStreams();
     final cursorStateStream = CursorStateEvent.instance.stream;
-    final panStateStream = PanStateEvent.instance.stream.distinct();
+    final panStateStream = PanStateEvent.instance.stream;
     CombineLatestStream.combine2(
       cursorStateStream,
       panStateStream,

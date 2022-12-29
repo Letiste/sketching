@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-import '../../eventStreams/actions/focus_event.dart';
-import '../../eventStreams/translation_event.dart';
-import '../../eventStreams/zoom_event.dart';
+import '../eventStreams/focus_event.dart';
+import '../eventStreams/translation_event.dart';
+import '../eventStreams/zoom_event.dart';
 
 class FocusController {
 

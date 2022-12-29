@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:sketcher/eventStreams/pencil_color_event.dart';
 import 'package:sketcher/shortcuts_mapping.dart';
 
-import 'eventStreams/actions/focus_event.dart';
-import 'eventStreams/actions/redo_event.dart';
-import 'eventStreams/actions/reset_event.dart';
-import 'eventStreams/actions/undo_event.dart';
+import 'eventStreams/focus_event.dart';
+import 'eventStreams/redo_event.dart';
+import 'eventStreams/reset_event.dart';
+import 'eventStreams/undo_event.dart';
 import 'eventStreams/cursor_state_event.dart';
 
 class ShortcutsHandlers {

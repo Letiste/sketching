@@ -1,5 +1,5 @@
-import '../event_stream.dart';
+import 'event_stream.dart';
 
-class UndoEvent {
+class MouseOnScreenEvent {
   static final EventStream<bool> instance = EventStream();
 }

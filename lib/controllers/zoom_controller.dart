@@ -22,7 +22,7 @@ class ZoomController {
   }
 
   double _calculateNewZoom(PointerScrollEvent pointer) {
-    final update = pointer.scrollDelta.dy > 0 ? 1.1 : 0.9;
+    final update = pointer.scrollDelta.dy < 0 ? 1.1 : 0.9;
     return _currentZoom * update;
   }
 
