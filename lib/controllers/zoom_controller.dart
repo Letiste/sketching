@@ -1,18 +1,24 @@
 import 'package:flutter/gestures.dart';
-import 'package:sketcher/eventStreams/scroll_event.dart';
-import 'package:sketcher/eventStreams/translate_event.dart';
-import 'package:sketcher/eventStreams/zoom_event.dart';
+import '../eventStreams/scroll_event.dart';
+import '../eventStreams/translation_event.dart';
+import '../eventStreams/zoom_event.dart';
 
 class ZoomController {
-  static double _currentZoom = 1;
-  static Offset _currentTranslation = Offset.zero;
+  late double _currentZoom;
+  late Offset _currentTranslation;
 
   static void instance = ZoomController._privateConstructor();
 
   ZoomController._privateConstructor() {
-    ZoomEvent.instance.stream.listen((event) => _currentZoom = event);
-    TranslateEvent.instance.stream.listen((event) => _currentTranslation = event);
+    _setupStreams();
     ScrollEvent.instance.stream.listen(_handleEvent);
+  }
+
+  void _handleEvent(PointerScrollEvent pointer) {
+    final newZoom = _calculateNewZoom(pointer);
+    final newTranslation = _calculateNewTranslation(pointer);
+    ZoomEvent.instance.addEvent(newZoom);
+    TranslationEvent.instance.addEvent(newTranslation);
   }
 
   double _calculateNewZoom(PointerScrollEvent pointer) {
@@ -27,10 +33,8 @@ class ZoomController {
     return cursorWindowPosition - cursorCanvasPosition * newZoom;
   }
 
-  void _handleEvent(PointerScrollEvent pointer) {
-    final newZoom = _calculateNewZoom(pointer);
-    final newTranslation = _calculateNewTranslation(pointer);
-    ZoomEvent.instance.addEvent(newZoom);
-    TranslateEvent.instance.addEvent(newTranslation);
+  void _setupStreams() {
+    ZoomEvent.instance.stream.listen((event) => _currentZoom = event);
+    TranslationEvent.instance.stream.listen((event) => _currentTranslation = event);
   }
 }

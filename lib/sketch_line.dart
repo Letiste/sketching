@@ -4,38 +4,34 @@ import 'package:flutter/material.dart';
 
 class SketchLine {
   List<Offset> points;
-  final Color color;
   final double scale;
-  final bool isErasing;
+  final Paint paint;
   Path? _path;
 
-  SketchLine({required this.points, required this.color, required this.scale, required this.isErasing});
+  SketchLine(
+      {required this.points, required this.scale, required this.paint});
 
   factory SketchLine.from(SketchLine sketchLine) {
     return SketchLine(
       points: List.from(sketchLine.points),
-      color: sketchLine.color,
       scale: sketchLine.scale,
-      isErasing: sketchLine.isErasing,
+      paint: sketchLine.paint,
     );
   }
 
   factory SketchLine.empty() {
-    return SketchLine(points: [], color: Colors.red, scale: 1, isErasing: false);
+    return SketchLine(points: [], scale: 1, paint: Paint());
   }
 
   void addPoint(Offset point) {
     points.add(point);
+    _path = null;
     if (points.length >= 3) {
       _filterPoint();
     }
   }
 
-  void drawLine(Canvas canvas, Paint paint) {
-    paint
-      ..blendMode = isErasing ? BlendMode.clear : BlendMode.srcOver
-      ..color = color
-      ..strokeWidth = 5 / scale;
+  void drawLine(Canvas canvas) {
     _computeSmoothLine();
     if (_path != null) {
       canvas.drawPath(_path!, paint);
@@ -71,7 +67,8 @@ class SketchLine {
       var p2 = points[i + 1] - (points[i + 2] - points[i]) * smoothFactor;
       _path!.cubicTo(p1.dx, p1.dy, p2.dx, p2.dy, points[i + 1].dx, points[i + 1].dy);
     }
-    p1 = points[points.length - 2] + (points[points.length - 1] - points[points.length - 3]) * smoothFactor;
+    p1 = points[points.length - 2] +
+        (points[points.length - 1] - points[points.length - 3]) * smoothFactor;
     _path!.quadraticBezierTo(p1.dx, p1.dy, points.last.dx, points.last.dy);
   }
 

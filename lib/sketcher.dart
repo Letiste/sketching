@@ -1,114 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart/streams.dart';
-
-import 'eventStreams/translate_event.dart';
+import 'package:sketcher/eventStreams/actions/focus_event.dart';
+import 'package:sketcher/eventStreams/actions/reset_event.dart';
+import 'package:sketcher/eventStreams/current_points_event.dart';
+import 'eventStreams/actions/redo_event.dart';
+import 'eventStreams/actions/undo_event.dart';
+import 'eventStreams/cursor_state_event.dart';
+import 'eventStreams/pencil_color_event.dart';
+import 'eventStreams/translation_event.dart';
 import 'eventStreams/zoom_event.dart';
 import 'my_painter.dart';
 import 'sketch_line.dart';
+import 'widgets/pan_listener.dart';
 import 'widgets/scroll_listener.dart';
 
-class Sketcher extends StatefulWidget {
-  const Sketcher({super.key});
+class Sketcher extends StatelessWidget {
 
-  @override
-  State<Sketcher> createState() => _SketcherState();
-}
+  final dynamic stream = CombineLatestStream.combine3(
+    ZoomEvent.instance.stream,
+    TranslationEvent.instance.stream,
+    CurrentPointsEvent.instance.stream,
+    (zoom, translation, currentPoints) => [zoom, translation, currentPoints],
+  );
 
-class _SketcherState extends State<Sketcher> {
-  SketchLine currentPoints = SketchLine.empty();
-  List<SketchLine> previousLines = [];
-  List<SketchLine> redoLines = [];
-  bool isErasing = false;
-  bool isDragging = false;
-  Color color = Colors.red;
-  double strokeWidth = 5;
-  Offset translate = Offset.zero;
-  double zoom = 1;
-  double get scale => zoom / 1;
-  dynamic stream = CombineLatestStream.combine2(
-      ZoomEvent.instance.stream, TranslateEvent.instance.stream, (zoom, translate) => [zoom, translate]);
+  Sketcher({super.key});
 
-  void onPanStart(DragStartDetails details) {
-    print('CURSOR CANVAS POSITION: ${(details.globalPosition - translate) / scale}');
-    print('CURSOR WINDOW POSITION: ${(details.globalPosition)}');
-    if (!isDragging) {
-      setState(() {
-        currentPoints = SketchLine(
-          points: [(details.globalPosition - translate) / scale],
-          color: color,
-          scale: scale,
-          isErasing: isErasing,
-        );
-        redoLines = [];
-      });
-    }
-  }
-
-  void onPanUpdate(DragUpdateDetails details) {
-    if (!isDragging) {
-      setState(() {
-        currentPoints = SketchLine.from(currentPoints)..addPoint((details.globalPosition - translate) / scale);
-      });
-    } else {
-      setState(() {
-        translate += details.delta;
-      });
-    }
-  }
-
-  void onPanEnd(DragEndDetails details) {
-    if (!isDragging) {
-      setState(() {
-        previousLines = List.from(previousLines)..add(currentPoints);
-        currentPoints = SketchLine.empty();
-      });
-    }
+  void toggleDrawing() {
+    CursorStateEvent.instance.addEvent(CursorDrawing());
   }
 
   void toggleErasing() {
-    setState(() {
-      isErasing = !isErasing;
-    });
+    CursorStateEvent.instance.addEvent(CursorErasing());
+  }
+
+  void toggleDragging() {
+    CursorStateEvent.instance.addEvent(CursorDragging());
   }
 
   void undo() {
-    if (previousLines.isNotEmpty) {
-      setState(() {
-        redoLines = redoLines..add(previousLines.last);
-        previousLines = previousLines..removeLast();
-      });
-    }
+    UndoEvent.instance.addEvent(true);
   }
 
   void redo() {
-    if (redoLines.isNotEmpty) {
-      setState(() {
-        previousLines = previousLines..add(redoLines.last);
-        redoLines = redoLines..removeLast();
-      });
-    }
+    RedoEvent.instance.addEvent(true);
   }
 
   void updateColor(Color newColor) {
-    setState(() {
-      isErasing = false;
-      color = newColor;
-    });
+    PencilColorEvent.instance.addEvent(newColor);
   }
 
   void reset() {
-    setState(() {
-      previousLines = previousLines..clear();
-      redoLines = redoLines..clear();
-      isErasing = false;
-    });
+    ResetEvent.instance.addEvent(true);
   }
 
   void focus() {
-    setState(() {
-      zoom = 1;
-      translate = Offset.zero;
-    });
+    FocusEvent.instance.addEvent(true);
   }
 
   @override
@@ -116,40 +62,49 @@ class _SketcherState extends State<Sketcher> {
     return Container(
       color: Colors.grey.shade900,
       child: ScrollListener(
-        child: GestureDetector(
-          onPanStart: onPanStart,
-          onPanUpdate: onPanUpdate,
-          onPanEnd: onPanEnd,
-          behavior: HitTestBehavior.translucent,
+        child: PanListener(
           child: Stack(
             children: [
-              StreamBuilder(
-                  stream: CombineLatestStream.combine2(ZoomEvent.instance.stream, TranslateEvent.instance.stream,
-                      (zoom, translate) => [zoom, translate]),
+              StreamBuilder<List>(
+                  stream: stream,
                   builder: (context, snapshot) {
-                    final zoom = snapshot.data?.first as double?;
-                    final translate = snapshot.data?.last as Offset?;
+                    var zoom = 1.0;
+                    var translation = Offset.zero;
+                    List<SketchLine> currentPoint = [];
+                    if (snapshot.hasData) {
+                      zoom = snapshot.data!.first as double;
+                      translation = snapshot.data![1] as Offset;
+                      currentPoint = snapshot.data![2] as List<SketchLine>;
+                    }
+                    print('TRANSLATION: ${currentPoint.length}');
                     return CustomPaint(
                       painter: MyPainter(
-                        lines: [...previousLines, currentPoints],
-                        translate: translate ?? Offset.zero,
-                        scale: zoom ?? 1,
+                        lines: currentPoint,
+                        translate: translation,
+                        scale: zoom,
                       ),
                     );
                   }),
               Row(
                 children: [
-                  TextButton(onPressed: toggleErasing, child: Text(isErasing ? "Draw" : "Erase")),
+                  TextButton(onPressed: toggleDrawing, child: Text("Draw")),
+                  TextButton(onPressed: toggleErasing, child: Text("Erase")),
+                  TextButton(onPressed: toggleDragging, child: Text("Drag")),
                   TextButton(onPressed: undo, child: Text("Undo")),
                   TextButton(onPressed: redo, child: Text("Redo")),
                   TextButton(onPressed: reset, child: Text("Reset")),
                   TextButton(onPressed: () => updateColor(Colors.blue), child: Text("Blue")),
                   TextButton(onPressed: () => updateColor(Colors.red), child: Text("Red")),
-                  TextButton(
-                    onPressed: () => setState(() => isDragging = !isDragging),
-                    child: Text(isDragging ? "Draw" : "Drag"),
-                  ),
                   TextButton(onPressed: focus, child: Text("Focus")),
+                  // StreamBuilder(
+                  //     stream: CurrentPointsEvent.instance.stream,
+                  //     builder: (context, snapshot) {
+                  //       print("PANSTATE");
+                  //       if (snapshot.hasData) {
+                  //         return Text('${snapshot.data!.last.points.length}');
+                  //       }
+                  //       return Text('toto');
+                  //     }),
                 ],
               )
             ],

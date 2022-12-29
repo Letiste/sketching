@@ -1,7 +1,13 @@
-import 'package:sketcher/eventStreams/event_stream.dart';
+import 'event_stream.dart';
 
-enum CursorState { drawing, erasing, dragging }
+abstract class CursorState {}
+
+class CursorDrawing extends CursorState {}
+
+class CursorErasing extends CursorState {}
+
+class CursorDragging extends CursorState {}
 
 class CursorStateEvent {
-  static final EventStream<CursorState> instance = EventStream();
+  static final EventStream<CursorState> instance = EventStream(CursorDrawing());
 }

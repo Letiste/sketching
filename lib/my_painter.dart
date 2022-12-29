@@ -15,16 +15,17 @@ class MyPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    var paint = Paint()
-      ..style = PaintingStyle.stroke
-      ..color = Colors.red
-      ..strokeCap = StrokeCap.round;
+    // var paint = Paint()
+    //   ..style = PaintingStyle.stroke
+    //   ..color = Colors.red
+    //   ..strokeCap = StrokeCap.round;
     canvas.translate(translate.dx, translate.dy);
     canvas.scale(scale);
     canvas.saveLayer(Rect.largest, Paint());
     for (var line in lines) {
-      line.drawLine(canvas, paint);
+      line.drawLine(canvas);
     }
+    // canvas.drawCircle(Offset(300, 300), 50, paint);
     canvas.restore();
   }
 
