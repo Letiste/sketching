@@ -137,13 +137,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.7"
-  screen_retriever:
-    dependency: transitive
-    description:
-      name: screen_retriever
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.4"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -198,13 +191,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
-  window_manager:
-    dependency: "direct main"
-    description:
-      name: window_manager
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.8"
   xml:
     dependency: transitive
     description:
