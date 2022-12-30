@@ -105,9 +105,8 @@ class Sketcher extends StatelessWidget {
                       ),
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {
-                          return CircularProgressIndicator();
+                          return Container();
                         }
-
                         return Positioned(
                           left: snapshot.data!.first.dx,
                           top: snapshot.data!.first.dy,
