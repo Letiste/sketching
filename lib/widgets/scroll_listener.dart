@@ -1,9 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:sketcher/eventStreams/mouse_position_event.dart';
+import 'package:sketcher/eventStreams/zoom_change_event.dart';
 
 import '../eventStreams/mouse_button_state_event.dart';
-import '../eventStreams/scroll_event.dart';
 
 class ScrollListener extends StatelessWidget {
   final Widget child;
@@ -20,7 +20,11 @@ class ScrollListener extends StatelessWidget {
       onPointerUp: (event) => MouseButtonStateEvent.instance.addEvent(MouseButtonUp()),
       onPointerSignal: (pointerSignal) {
         if (pointerSignal is PointerScrollEvent) {
-          ScrollEvent.instance.addEvent(pointerSignal);
+          if (pointerSignal.scrollDelta.dy < 0) {
+            ZoomChangeEvent.instance.addEvent(ZoomIncrease());
+          } else {
+            ZoomChangeEvent.instance.addEvent(ZoomDecrease());
+          }
         }
       },
       child: child,

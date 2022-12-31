@@ -11,7 +11,7 @@ import 'controllers/draw_controller.dart';
 import 'controllers/zoom_controller.dart';
 import 'sketcher.dart';
 
-void main() async {
+void main() {
   setupControllers();
   runApp(const MyApp());
 }

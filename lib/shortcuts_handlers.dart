@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sketcher/eventStreams/pencil_color_event.dart';
+import 'package:sketcher/eventStreams/zoom_change_event.dart';
 import 'package:sketcher/shortcuts_mapping.dart';
 
 import 'eventStreams/focus_event.dart';
@@ -17,6 +18,8 @@ class ShortcutsHandlers {
     ShortcutsActions.undo: _undo,
     ShortcutsActions.redo: _redo,
     ShortcutsActions.focus: _focus,
+    ShortcutsActions.zoomIncrease: _zoomIncrease,
+    ShortcutsActions.zoomDecrease: _zoomDecrease,
     ShortcutsActions.color1: _color1,
     ShortcutsActions.color2: _color2,
     ShortcutsActions.color3: _color3,
@@ -50,6 +53,14 @@ class ShortcutsHandlers {
 
   static void _focus() {
     FocusEvent.instance.addEvent(true);
+  }
+
+  static void _zoomIncrease() {
+    ZoomChangeEvent.instance.addEvent(ZoomIncrease());
+  }
+
+  static void _zoomDecrease() {
+    ZoomChangeEvent.instance.addEvent(ZoomDecrease());
   }
 
   static void _color1() {

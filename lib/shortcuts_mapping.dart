@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter/services.dart';
 import 'package:sketcher/shortcuts_handlers.dart';
 
@@ -10,6 +10,8 @@ enum ShortcutsActions {
   undo,
   redo,
   focus,
+  zoomIncrease,
+  zoomDecrease,
   color1,
   color2,
   color3,
@@ -36,6 +38,8 @@ class ShortcutsMapping {
     CharacterActivator("'"): ShortcutsActions.color4,
     SingleActivator(LogicalKeyboardKey.numpad5): ShortcutsActions.color5,
     CharacterActivator("("): ShortcutsActions.color5,
+    SingleActivator(LogicalKeyboardKey.numpadAdd, control: true):ShortcutsActions.zoomIncrease,
+    SingleActivator(LogicalKeyboardKey.numpadSubtract, control: true):ShortcutsActions.zoomDecrease,
   };
 
   static Map<ShortcutActivator, void Function()> get shortcutsMapping {
