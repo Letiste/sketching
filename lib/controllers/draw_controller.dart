@@ -11,13 +11,14 @@ import '../eventStreams/pan_state_event.dart';
 import '../eventStreams/translation_event.dart';
 import '../eventStreams/zoom_event.dart';
 import '../sketch_line.dart';
+import '../utils/my_paint.dart';
 import '../utils/tuple.dart';
 
 class DrawController {
   late List<SketchLine> _currentPoints;
   late Offset _currentTranslation;
   late double _currentZoom;
-  late Paint _currentPaint;
+  late MyPaint _currentPaint;
 
   static void instance = DrawController._privateController();
 

@@ -12,6 +12,7 @@ enum ShortcutsActions {
   focus,
   zoomIncrease,
   zoomDecrease,
+  save,
   color1,
   color2,
   color3,
@@ -40,6 +41,7 @@ class ShortcutsMapping {
     CharacterActivator("("): ShortcutsActions.color5,
     SingleActivator(LogicalKeyboardKey.numpadAdd, control: true):ShortcutsActions.zoomIncrease,
     SingleActivator(LogicalKeyboardKey.numpadSubtract, control: true):ShortcutsActions.zoomDecrease,
+    SingleActivator(LogicalKeyboardKey.keyS, control: true):ShortcutsActions.save,
   };
 
   static Map<ShortcutActivator, void Function()> get shortcutsMapping {

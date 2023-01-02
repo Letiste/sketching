@@ -1,11 +1,12 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:sketcher/utils/my_paint.dart';
 
 class SketchLine {
   List<Offset> points;
   final double scale;
-  final Paint paint;
+  final MyPaint paint;
   Path? _path;
 
   SketchLine({required this.points, required this.scale, required this.paint});
@@ -17,6 +18,20 @@ class SketchLine {
       paint: sketchLine.paint,
     );
   }
+
+  factory SketchLine.fromJson(Map<String, dynamic> json) {
+    return SketchLine(
+      points: List<Offset>.from((json['points']).map((point) => Offset(point[0], point[1])).toList()),
+      scale: json['scale'],
+      paint: MyPaint.fromJson(json['paint']),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'points': points.map((point) => [point.dx, point.dy]).toList(),
+        'scale': scale,
+        'paint': paint
+      };
 
   void addPoint(Offset point) {
     points.add(point);

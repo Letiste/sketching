@@ -6,6 +6,7 @@ import 'package:sketcher/shortcuts_mapping.dart';
 import 'eventStreams/focus_event.dart';
 import 'eventStreams/redo_event.dart';
 import 'eventStreams/reset_event.dart';
+import 'eventStreams/save_event.dart';
 import 'eventStreams/undo_event.dart';
 import 'eventStreams/cursor_state_event.dart';
 
@@ -20,6 +21,7 @@ class ShortcutsHandlers {
     ShortcutsActions.focus: _focus,
     ShortcutsActions.zoomIncrease: _zoomIncrease,
     ShortcutsActions.zoomDecrease: _zoomDecrease,
+    ShortcutsActions.save: _save,
     ShortcutsActions.color1: _color1,
     ShortcutsActions.color2: _color2,
     ShortcutsActions.color3: _color3,
@@ -61,6 +63,10 @@ class ShortcutsHandlers {
 
   static void _zoomDecrease() {
     ZoomChangeEvent.instance.addEvent(ZoomDecrease());
+  }
+
+  static void _save() {
+    SaveEvent.instance.addEvent(true);
   }
 
   static void _color1() {
