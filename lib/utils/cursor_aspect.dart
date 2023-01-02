@@ -44,7 +44,7 @@ class CursorAspect {
       child: Stack(
         children: [
           Transform.translate(
-            offset: Offset(-1, -1),
+            offset: const Offset(-1, -1),
             child: SvgPicture.asset(
               asset,
               height: 24,

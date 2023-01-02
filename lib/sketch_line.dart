@@ -8,8 +8,7 @@ class SketchLine {
   final Paint paint;
   Path? _path;
 
-  SketchLine(
-      {required this.points, required this.scale, required this.paint});
+  SketchLine({required this.points, required this.scale, required this.paint});
 
   factory SketchLine.from(SketchLine sketchLine) {
     return SketchLine(
@@ -17,10 +16,6 @@ class SketchLine {
       scale: sketchLine.scale,
       paint: sketchLine.paint,
     );
-  }
-
-  factory SketchLine.empty() {
-    return SketchLine(points: [], scale: 1, paint: Paint());
   }
 
   void addPoint(Offset point) {
@@ -43,8 +38,8 @@ class SketchLine {
     final p1 = points[l - 2];
     final p2 = points[l - 3];
     final p3 = points[l - 1];
-    final angle = _getAngle(p1, p2, p3);
-    final distance = _getDistance(p1, p2);
+    final angle = _getAngle(p1, p2, p3) * scale;
+    final distance = _getDistance(p1, p2) * scale;
     if (!(angle < pi / 2 || distance > 10)) {
       points.removeAt(l - 2);
     }
