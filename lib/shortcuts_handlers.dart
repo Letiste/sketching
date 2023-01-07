@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:sketcher/config/paint_colors.dart';
 import 'package:sketcher/eventStreams/pencil_color_event.dart';
 import 'package:sketcher/eventStreams/zoom_change_event.dart';
 import 'package:sketcher/shortcuts_mapping.dart';
@@ -70,22 +70,22 @@ class ShortcutsHandlers {
   }
 
   static void _color1() {
-    PencilColorEvent.instance.addEvent(Colors.grey.shade100);
+    PencilColorEvent.instance.addEvent(PaintColors.color1);
   }
 
   static void _color2() {
-    PencilColorEvent.instance.addEvent(Colors.pink);
+    PencilColorEvent.instance.addEvent(PaintColors.color2);
   }
 
   static void _color3() {
-    PencilColorEvent.instance.addEvent(Colors.deepPurple);
+    PencilColorEvent.instance.addEvent(PaintColors.color3);
   }
 
   static void _color4() {
-    PencilColorEvent.instance.addEvent(Colors.teal);
+    PencilColorEvent.instance.addEvent(PaintColors.color4);
   }
 
   static void _color5() {
-    PencilColorEvent.instance.addEvent(Colors.deepOrange);
+    PencilColorEvent.instance.addEvent(PaintColors.color5);
   }
 }

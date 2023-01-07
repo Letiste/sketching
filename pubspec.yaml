@@ -39,6 +39,7 @@ dependencies:
   rxdart: ^0.27.7
   flutter_svg: ^1.1.6
   file_picker: ^5.2.4
+  native_context_menu: ^0.2.2+5
 
 dev_dependencies:
   flutter_test:
