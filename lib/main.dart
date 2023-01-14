@@ -12,6 +12,8 @@ import 'package:sketcher/controllers/save_file_controller.dart';
 import 'package:sketcher/controllers/undo_controller.dart';
 import 'package:sketcher/controllers/pencil_color_controller.dart';
 import 'package:sketcher/eventStreams/current_points_event.dart';
+import 'package:sketcher/eventStreams/translation_event.dart';
+import 'package:sketcher/eventStreams/zoom_event.dart';
 import 'package:sketcher/sketch_line.dart';
 import 'controllers/drag_controller.dart';
 import 'controllers/draw_controller.dart';
@@ -47,10 +49,19 @@ class MyApp extends StatelessWidget {
 
   void _handleArgs() {
     if (args.isNotEmpty) {
-      File file = File(args.first);
-      final pointsJson = List<Map<String, dynamic>>.from(jsonDecode(file.readAsStringSync()));
-      CurrentPointsEvent.instance
-          .addEvent(pointsJson.map((pointJson) => SketchLine.fromJson(pointJson)).toList());
+    File file = File(args.first);
+    final content = Map<String, dynamic>.from(jsonDecode(file.readAsStringSync()));
+    CurrentPointsEvent.instance.addEvent(
+      List<Map<String, dynamic>>.from(content["currentPoints"])
+          .map(
+            (currentPoint) => SketchLine.fromJson(currentPoint),
+          )
+          .toList(),
+    );
+    ZoomEvent.instance.addEvent(content["zoom"]);
+    TranslationEvent.instance.addEvent(
+      Offset(content["translation"]["dx"], content["translation"]["dy"]),
+    );
     }
   }
 
