@@ -1,12 +1,10 @@
-import 'package:sketcher/eventStreams/redo_points_event.dart';
+import 'package:sketcher/eventStreams/redo_action_event.dart';
+import 'package:sketcher/eventStreams/undo_action_event.dart';
 import 'package:sketcher/eventStreams/undo_event.dart';
-import 'package:sketcher/sketch_line.dart';
-
-import '../eventStreams/current_points_event.dart';
 
 class UndoController {
-  late List<SketchLine> _currentPoints;
-  late List<SketchLine> _redoPoints;
+  late List<UndoAction> _undoActions;
+  late List<RedoAction> _redoActions;
 
   static void instance = UndoController._privateController();
 
@@ -16,16 +14,17 @@ class UndoController {
   }
 
   void _handleEvent() {
-    if (_currentPoints.isNotEmpty) {
-      List<SketchLine> newPoints = List.from(_currentPoints)..removeLast();
-      List<SketchLine> newRedoPoints = List.from(_redoPoints)..add(_currentPoints.last);
-      CurrentPointsEvent.instance.addEvent(newPoints);
-      RedoPointsEvent.instance.addEvent(newRedoPoints);
-    }
+    if (_undoActions.isEmpty) return;
+    List<UndoAction> newUndoActions = List.from(_undoActions);
+    final undoAction = newUndoActions.removeLast();
+    undoAction.undo();
+    UndoActionEvent.instance.addEvent(newUndoActions);
+    List<RedoAction> newRedoActions = List.from(_redoActions)..add(undoAction.redo());
+    RedoActionEvent.instance.addEvent(newRedoActions);
   }
 
   void _setupStreams() {
-    CurrentPointsEvent.instance.stream.listen((event) => _currentPoints = event);
-    RedoPointsEvent.instance.stream.listen((event) => _redoPoints = event);
+    UndoActionEvent.instance.stream.listen((event) => _undoActions = event);
+    RedoActionEvent.instance.stream.listen((event) => _redoActions = event);
   }
 }
