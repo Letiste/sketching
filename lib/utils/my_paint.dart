@@ -18,6 +18,10 @@ class MyPaint extends Paint {
     );
   }
 
+  factory MyPaint.from(MyPaint paint) {
+    return MyPaint(color: paint.color, strokeWidth: paint.strokeWidth, blendMode: paint.blendMode);
+  }
+
   Map<String, dynamic> toJson() =>
       {'color': color.value, 'strokeWidth': strokeWidth, 'blendMode': blendMode.index};
 }

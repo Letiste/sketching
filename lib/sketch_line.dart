@@ -15,7 +15,7 @@ class SketchLine {
     return SketchLine(
       points: List.from(sketchLine.points),
       scale: sketchLine.scale,
-      paint: sketchLine.paint,
+      paint: MyPaint.from(sketchLine.paint),
     );
   }
 
