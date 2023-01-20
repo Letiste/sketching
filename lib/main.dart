@@ -9,6 +9,7 @@ import 'package:sketcher/controllers/paint_controller.dart';
 import 'package:sketcher/controllers/redo_controller.dart';
 import 'package:sketcher/controllers/save_controller.dart';
 import 'package:sketcher/controllers/save_file_controller.dart';
+import 'package:sketcher/controllers/selected_area_controller.dart';
 import 'package:sketcher/controllers/undo_controller.dart';
 import 'package:sketcher/controllers/pencil_color_controller.dart';
 import 'package:sketcher/eventStreams/current_points_event.dart';
@@ -40,6 +41,7 @@ void setupControllers() {
   SaveController.instance;
   SaveFileController.instance;
   CurrentPointUndoController.instance;
+  SelectedAreaController.instance;
 }
 
 class MyApp extends StatelessWidget {

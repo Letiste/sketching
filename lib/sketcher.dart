@@ -4,6 +4,8 @@ import 'package:sketcher/eventStreams/cursor_aspect_event.dart';
 import 'package:sketcher/eventStreams/mouse_on_screen_event.dart';
 import 'package:sketcher/eventStreams/mouse_position_event.dart';
 import 'package:sketcher/eventStreams/current_points_event.dart';
+import 'package:sketcher/eventStreams/selected_area_event.dart';
+import 'package:sketcher/selected_area.dart';
 import 'package:sketcher/shortcuts_mapping.dart';
 import 'package:sketcher/widgets/context_menu.dart';
 import 'eventStreams/translation_event.dart';
@@ -15,11 +17,13 @@ import 'widgets/pan_listener.dart';
 import 'widgets/scroll_listener.dart';
 
 class Sketcher extends StatelessWidget {
-  final dynamic stream = CombineLatestStream.combine3(
+  final dynamic stream = CombineLatestStream.combine4(
     ZoomEvent.instance.stream,
     TranslationEvent.instance.stream,
     CurrentPointsEvent.instance.stream,
-    (zoom, translation, currentPoints) => [zoom, translation, currentPoints],
+    SelectedAreaEvent.instance.stream,
+    (zoom, translation, currentPoints, selectedArea) =>
+        [zoom, translation, currentPoints, selectedArea],
   );
 
   Sketcher({super.key});
@@ -50,14 +54,17 @@ class Sketcher extends StatelessWidget {
                           var zoom = 1.0;
                           var translation = Offset.zero;
                           List<SketchLine> currentPoint = [];
+                          SelectedArea selectedArea = SelectedArea.empty();
                           if (snapshot.hasData) {
                             zoom = snapshot.data!.first as double;
                             translation = snapshot.data![1] as Offset;
                             currentPoint = snapshot.data![2] as List<SketchLine>;
+                            selectedArea = snapshot.data![3];
                           }
                           return CustomPaint(
                             painter: MyPainter(
                               lines: currentPoint,
+                              selectedArea: selectedArea,
                               translate: translation,
                               scale: zoom,
                             ),

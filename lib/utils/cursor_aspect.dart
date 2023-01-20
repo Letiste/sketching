@@ -22,6 +22,9 @@ class CursorAspect {
     if (cursorState is CursorErasing) {
       return buildEraseCursor(mouseButtonState);
     }
+    if (cursorState is CursorSelecting) {
+      return buildSelectCursor(mouseButtonState);
+    }
     return Container();
   }
 
@@ -81,6 +84,17 @@ class CursorAspect {
             border: Border.all(width: 1, color: Colors.grey.shade900),
           ),
         ),
+      ),
+    );
+  }
+
+  static Widget buildSelectCursor(MouseButtonState mouseButtonState) {
+    const icon = Icons.add;
+    return Transform.translate(
+      offset: const Offset(-12, -12),
+      child: const Icon(
+        icon,
+        color: Colors.white,
       ),
     );
   }

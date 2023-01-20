@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sketcher/eventStreams/paint_state_event.dart';
-import 'package:sketcher/eventStreams/redo_points_event.dart';
 
 import '../eventStreams/current_points_event.dart';
 import '../eventStreams/cursor_state_event.dart';
@@ -37,7 +36,6 @@ class DrawController {
   }
 
   void _handleEvent(PanState panState) {
-    RedoPointsEvent.instance.addEvent([]);
     if (panState is PanStarting) {
       _handlePanStarting(panState);
     }

@@ -51,6 +51,10 @@ class ContextMenu extends StatelessWidget {
           title: "Drag",
           onSelected: () => CursorStateEvent.instance.addEvent(CursorDragging()),
         ),
+        MenuItem(
+          title: "Select",
+          onSelected: () => CursorStateEvent.instance.addEvent(CursorSelecting()),
+        ),
       ],
       child: child,
     );

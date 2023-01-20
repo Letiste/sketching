@@ -21,7 +21,11 @@ class SketchLine {
 
   factory SketchLine.fromJson(Map<String, dynamic> json) {
     return SketchLine(
-      points: List<Offset>.from((json['points']).map((point) => Offset(point[0], point[1])).toList()),
+      points: List<Offset>.from((json['points'])
+          .map(
+            (point) => Offset(point[0], point[1]),
+          )
+          .toList()),
       scale: json['scale'],
       paint: MyPaint.fromJson(json['paint']),
     );

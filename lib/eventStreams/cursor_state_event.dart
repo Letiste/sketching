@@ -8,6 +8,8 @@ class CursorErasing extends CursorState {}
 
 class CursorDragging extends CursorState {}
 
+class CursorSelecting extends CursorState {}
+
 class CursorStateEvent {
   static final EventStream<CursorState> instance = EventStream(CursorDrawing());
 }

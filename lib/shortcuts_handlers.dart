@@ -16,6 +16,7 @@ class ShortcutsHandlers {
     ShortcutsActions.erasing: _erasing,
     ShortcutsActions.dragging: _dragging,
     ShortcutsActions.drawing: _drawing,
+    ShortcutsActions.selecting: _selecting,
     ShortcutsActions.undo: _undo,
     ShortcutsActions.redo: _redo,
     ShortcutsActions.focus: _focus,
@@ -43,6 +44,10 @@ class ShortcutsHandlers {
 
   static void _drawing() {
     CursorStateEvent.instance.addEvent(CursorDrawing());
+  }
+
+  static void _selecting() {
+    CursorStateEvent.instance.addEvent(CursorSelecting());
   }
 
   static void _undo() {
