@@ -25,6 +25,9 @@ class CursorAspect {
     if (cursorState is CursorSelecting) {
       return buildSelectCursor(mouseButtonState);
     }
+    if (cursorState is CursorInSelectingArea) {
+      return buildDragCursor(mouseButtonState);
+    }
     return Container();
   }
 

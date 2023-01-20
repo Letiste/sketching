@@ -21,10 +21,12 @@ class MyPainter extends CustomPainter {
     canvas.translate(translate.dx, translate.dy);
     canvas.scale(scale);
     canvas.saveLayer(Rect.largest, Paint());
+
     for (var line in lines) {
       line.drawLine(canvas);
     }
     selectedArea.drawArea(canvas);
+
     canvas.restore();
   }
 

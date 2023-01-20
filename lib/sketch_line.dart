@@ -7,7 +7,7 @@ class SketchLine {
   List<Offset> points;
   final double scale;
   final MyPaint paint;
-  Path? _path;
+  Path? path;
 
   SketchLine({required this.points, required this.scale, required this.paint});
 
@@ -39,7 +39,7 @@ class SketchLine {
 
   void addPoint(Offset point) {
     points.add(point);
-    _path = null;
+    path = null;
     if (points.length >= 3) {
       _filterPoint();
     }
@@ -47,8 +47,8 @@ class SketchLine {
 
   void drawLine(Canvas canvas) {
     _computeSmoothLine();
-    if (_path != null) {
-      canvas.drawPath(_path!, paint);
+    if (path != null) {
+      canvas.drawPath(path!, paint);
     }
   }
 
@@ -68,22 +68,22 @@ class SketchLine {
     if (points.length < 3) {
       return;
     }
-    if (_path != null) {
+    if (path != null) {
       return;
     }
     const smoothFactor = 0.2;
-    _path = Path();
-    _path!.moveTo(points[0].dx, points[0].dy);
+    path = Path();
+    path!.moveTo(points[0].dx, points[0].dy);
     var p1 = points[1] - (points[2] - points[0]) * smoothFactor;
-    _path!.quadraticBezierTo(p1.dx, p1.dy, points[1].dx, points[1].dy);
+    path!.quadraticBezierTo(p1.dx, p1.dy, points[1].dx, points[1].dy);
     for (var i = 1; i < points.length - 2; i++) {
       p1 = points[i] + (points[i + 1] - points[i - 1]) * smoothFactor;
       var p2 = points[i + 1] - (points[i + 2] - points[i]) * smoothFactor;
-      _path!.cubicTo(p1.dx, p1.dy, p2.dx, p2.dy, points[i + 1].dx, points[i + 1].dy);
+      path!.cubicTo(p1.dx, p1.dy, p2.dx, p2.dy, points[i + 1].dx, points[i + 1].dy);
     }
     p1 = points[points.length - 2] +
         (points[points.length - 1] - points[points.length - 3]) * smoothFactor;
-    _path!.quadraticBezierTo(p1.dx, p1.dy, points.last.dx, points.last.dy);
+    path!.quadraticBezierTo(p1.dx, p1.dy, points.last.dx, points.last.dy);
   }
 
   double _getAngle(Offset p1, Offset p2, Offset p3) {

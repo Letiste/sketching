@@ -15,7 +15,7 @@ class CursorAspectController {
 
   CursorAspectController._privateController() {
     final mouseButtonStateStream = MouseButtonStateEvent.instance.stream;
-    final cursorStateStream = CursorStateEvent.instance.stream;
+    final cursorStateStream = CursorStateEvent.instance.stream.distinct();
     final pencilColorStream = PencilColorEvent.instance.stream;
     final mouseOnScreenStream = MouseOnScreenEvent.instance.stream;
     CombineLatestStream.combine4(
