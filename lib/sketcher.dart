@@ -48,28 +48,30 @@ class Sketcher extends StatelessWidget {
                   color: Colors.grey.shade900,
                   child: Stack(
                     children: [
-                      StreamBuilder<List>(
-                        stream: stream,
-                        builder: (context, snapshot) {
-                          var zoom = 1.0;
-                          var translation = Offset.zero;
-                          List<SketchLine> currentPoint = [];
-                          SelectedArea selectedArea = SelectedArea.empty();
-                          if (snapshot.hasData) {
-                            zoom = snapshot.data!.first as double;
-                            translation = snapshot.data![1] as Offset;
-                            currentPoint = snapshot.data![2] as List<SketchLine>;
-                            selectedArea = snapshot.data![3];
-                          }
-                          return CustomPaint(
-                            painter: MyPainter(
-                              lines: currentPoint,
-                              selectedArea: selectedArea,
-                              translate: translation,
-                              scale: zoom,
-                            ),
-                          );
-                        },
+                      RepaintBoundary(
+                        child: StreamBuilder<List>(
+                          stream: stream,
+                          builder: (context, snapshot) {
+                            var zoom = 1.0;
+                            var translation = Offset.zero;
+                            List<SketchLine> currentPoint = [];
+                            SelectedArea selectedArea = SelectedArea.empty();
+                            if (snapshot.hasData) {
+                              zoom = snapshot.data!.first as double;
+                              translation = snapshot.data![1] as Offset;
+                              currentPoint = snapshot.data![2] as List<SketchLine>;
+                              selectedArea = snapshot.data![3];
+                            }
+                            return CustomPaint(
+                              painter: MyPainter(
+                                lines: currentPoint,
+                                selectedArea: selectedArea,
+                                translate: translation,
+                                scale: zoom,
+                              ),
+                            );
+                          },
+                        ),
                       ),
                       StreamBuilder(
                         stream: CombineLatestStream.combine2(
