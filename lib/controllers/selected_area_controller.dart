@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sketcher/eventStreams/current_points_event.dart';
 import 'package:sketcher/eventStreams/selected_area_event.dart';
+import 'package:sketcher/eventStreams/selected_paths_event.dart';
 import 'package:sketcher/selected_area.dart';
 import 'package:sketcher/sketch_line.dart';
 
@@ -51,27 +52,22 @@ class SelectedAreaController {
 
   void _selectSketchLines() {
     final selectedPathsIndex = _selectedArea.getSelectedPathsIndex(_sketchLines);
-    for (final selectedPathIndex in selectedPathsIndex) {
-      _sketchLines[selectedPathIndex].paint.color = Colors.yellow;
-    }
-    CurrentPointsEvent.instance.addEvent(_sketchLines);
+    SelectedPathsEvent.instance.addEvent(selectedPathsIndex);
   }
 
   SelectedArea _updateSelectedArea(PanUpdating panState) {
     final mousePosition = _getPointPosition(panState.details.localPosition);
-    SelectedArea newSelectedArea;
+    Offset firstCorner;
     if (_selectedArea.isEmpty) {
-      newSelectedArea = SelectedArea(
-        firstCorner: mousePosition,
-        secondCorner: mousePosition,
-      );
+      firstCorner = mousePosition;
     } else {
-      newSelectedArea = SelectedArea(
-        firstCorner: _selectedArea.firstCorner,
-        secondCorner: mousePosition,
-      );
+      firstCorner = _selectedArea.firstCorner;
     }
-    return newSelectedArea;
+    return SelectedArea(
+      firstCorner: firstCorner,
+      secondCorner: mousePosition,
+      scale: _currentZoom,
+    );
   }
 
   Offset _getPointPosition(Offset cursorWindowPosition) {

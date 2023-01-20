@@ -37,6 +37,11 @@ class SketchLine {
         'paint': paint
       };
 
+  void shift(Offset drag) {
+    if (path == null) return;
+    path = path!.shift(drag);
+  }
+
   void addPoint(Offset point) {
     points.add(point);
     path = null;

@@ -7,26 +7,40 @@ class SelectedArea {
   final Offset firstCorner;
   final Offset secondCorner;
   final bool isEmpty;
+  final double scale;
   Path? path;
   Path? _area;
   final Paint _paint = Paint();
+  List<int>? _selectedPathsIndex;
 
-  SelectedArea({required this.firstCorner, required this.secondCorner, this.isEmpty = false});
+  SelectedArea(
+      {required this.firstCorner,
+      required this.secondCorner,
+      required this.scale,
+      this.isEmpty = false});
 
   factory SelectedArea.empty() {
-    return SelectedArea(firstCorner: Offset.zero, secondCorner: Offset.zero, isEmpty: true);
+    return SelectedArea(
+        firstCorner: Offset.zero, secondCorner: Offset.zero, scale: 1, isEmpty: true);
   }
 
   factory SelectedArea.from(SelectedArea selectedArea) {
     return SelectedArea(
       firstCorner: selectedArea.firstCorner,
       secondCorner: selectedArea.secondCorner,
+      scale: selectedArea.scale,
     );
   }
 
   bool contains(Offset point) {
     if (_area == null) return false;
     return _area!.contains(point);
+  }
+
+  void shift(Offset drag) {
+    if (path == null || _area == null) return;
+    path = path!.shift(drag);
+    _area = _area!.shift(drag);
   }
 
   void drawArea(Canvas canvas) {
@@ -38,14 +52,16 @@ class SelectedArea {
     _paint
       ..color = Colors.white
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2;
-    path = dashPath(_area!, dashArray: CircularIntervalList([5, 5]));
+      ..strokeWidth = 2 / scale;
+    final dashInterval = 5 / scale;
+    path = dashPath(_area!, dashArray: CircularIntervalList([dashInterval, dashInterval]));
     canvas.drawPath(path!, _paint);
   }
 
   List<int> getSelectedPathsIndex(List<SketchLine> sketchLines) {
     if (path == null) return [];
-    List<int> selectedPathsIndex = [];
+    if (_selectedPathsIndex != null) return _selectedPathsIndex!;
+    _selectedPathsIndex = [];
     for (var i = 0; i < sketchLines.length; i++) {
       final sketchLine = sketchLines[i];
 
@@ -53,9 +69,9 @@ class SelectedArea {
 
       final pathCombine = Path.combine(PathOperation.intersect, _area!, sketchLine.path!);
       if (!pathCombine.getBounds().isEmpty) {
-        selectedPathsIndex.add(i);
+        _selectedPathsIndex!.add(i);
       }
     }
-    return selectedPathsIndex;
+    return _selectedPathsIndex!;
   }
 }
