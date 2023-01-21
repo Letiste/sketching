@@ -18,15 +18,14 @@ class CurrentPointUndoController {
   CurrentPointUndoController._privateController() {
     _setupStreams();
     final cursorStateStream = CursorStateEvent.instance.stream;
-    final panStateStream = PanStateEvent.instance.stream;
-    CombineLatestStream.combine2(
-      cursorStateStream,
-      panStateStream,
-      (cursorState, panState) => Pair(cursorState, panState),
-    )
-        .where((event) => event.first is CursorDrawing || event.first is CursorErasing)
-        .map((event) => event.second)
-        .where((event) => event is PanEnding)
+    final panStateStream = PanStateEvent.instance.stream.where((event) => event is PanEnding);
+
+    panStateStream
+        .withLatestFrom(
+          cursorStateStream,
+          (panState, cursorState) => Pair(panState, cursorState),
+        )
+        .where((event) => event.second is CursorDrawing || event is CursorErasing)
         .listen((_) => _handleEvent());
   }
 

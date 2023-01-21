@@ -37,8 +37,11 @@ class SelectedArea {
     return _area!.contains(point);
   }
 
-  void shift(Offset drag) {
-    if (path == null || _area == null) return;
+  void shift(Offset drag, List<SketchLine> sketchLines) {
+    if (path == null || _area == null || _selectedPathsIndex == null) return;
+    for (final selectedPath in _selectedPathsIndex!) {
+      sketchLines[selectedPath].shift(drag);
+    }
     path = path!.shift(drag);
     _area = _area!.shift(drag);
   }

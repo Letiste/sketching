@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:sketcher/eventStreams/redo_action_event.dart';
 import 'package:sketcher/eventStreams/undo_action_event.dart';
 
@@ -18,6 +19,7 @@ class RedoController {
     if (_redoActions.isEmpty) return;
     List<RedoAction> newRedoActions = List.from(_redoActions);
     final redoAction = newRedoActions.removeLast();
+    debugPrint('Undo from ${redoAction.runtimeType}');
     redoAction.redo();
     RedoActionEvent.instance.addEvent(newRedoActions);
     List<UndoAction> newUndoActions = List.from(_undoActions)..add(redoAction.undo());

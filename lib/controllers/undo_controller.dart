@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:sketcher/eventStreams/redo_action_event.dart';
 import 'package:sketcher/eventStreams/undo_action_event.dart';
 import 'package:sketcher/eventStreams/undo_event.dart';
@@ -17,6 +18,7 @@ class UndoController {
     if (_undoActions.isEmpty) return;
     List<UndoAction> newUndoActions = List.from(_undoActions);
     final undoAction = newUndoActions.removeLast();
+    debugPrint('Undo from ${undoAction.runtimeType}');
     undoAction.undo();
     UndoActionEvent.instance.addEvent(newUndoActions);
     List<RedoAction> newRedoActions = List.from(_redoActions)..add(undoAction.redo());
