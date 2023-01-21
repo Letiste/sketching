@@ -11,7 +11,7 @@ class SelectedArea {
   Path? path;
   Path? _area;
   final Paint _paint = Paint();
-  List<int>? _selectedPathsIndex;
+  List<int>? selectedPathsIndex;
 
   SelectedArea(
       {required this.firstCorner,
@@ -38,9 +38,11 @@ class SelectedArea {
   }
 
   void shift(Offset drag, List<SketchLine> sketchLines) {
-    if (path == null || _area == null || _selectedPathsIndex == null) return;
-    for (final selectedPath in _selectedPathsIndex!) {
-      sketchLines[selectedPath].shift(drag);
+    if (path == null || _area == null || selectedPathsIndex == null) return;
+    for (final selectedPath in selectedPathsIndex!) {
+      final sketchLine = sketchLines[selectedPath];
+      final newPoints = sketchLine.points.map((point) => point + drag).toList();
+      sketchLines[selectedPath] = SketchLine.from(sketchLine)..points = newPoints;
     }
     path = path!.shift(drag);
     _area = _area!.shift(drag);
@@ -63,8 +65,8 @@ class SelectedArea {
 
   List<int> getSelectedPathsIndex(List<SketchLine> sketchLines) {
     if (path == null) return [];
-    if (_selectedPathsIndex != null) return _selectedPathsIndex!;
-    _selectedPathsIndex = [];
+    if (selectedPathsIndex != null) return selectedPathsIndex!;
+    selectedPathsIndex = [];
     for (var i = 0; i < sketchLines.length; i++) {
       final sketchLine = sketchLines[i];
 
@@ -72,9 +74,9 @@ class SelectedArea {
 
       final pathCombine = Path.combine(PathOperation.intersect, _area!, sketchLine.path!);
       if (!pathCombine.getBounds().isEmpty) {
-        _selectedPathsIndex!.add(i);
+        selectedPathsIndex!.add(i);
       }
     }
-    return _selectedPathsIndex!;
+    return selectedPathsIndex!;
   }
 }

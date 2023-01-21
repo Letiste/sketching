@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:sketcher/controllers/cursor_aspect_controller.dart';
+import 'package:sketcher/controllers/duplicate_controller.dart';
 import 'package:sketcher/controllers/focus_controller.dart';
 import 'package:sketcher/controllers/reset_controller.dart';
 import 'package:sketcher/controllers/paint_controller.dart';
@@ -48,6 +49,7 @@ void setupControllers() {
   SelectedAreaCursorController.instance;
   SelectedPathsController.instance;
   SelectedAreaDragUndoController.instance;
+  DuplicateController.instance;
 }
 
 class MyApp extends StatelessWidget {

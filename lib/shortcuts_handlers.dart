@@ -3,6 +3,7 @@ import 'package:sketcher/eventStreams/pencil_color_event.dart';
 import 'package:sketcher/eventStreams/zoom_change_event.dart';
 import 'package:sketcher/shortcuts_mapping.dart';
 
+import 'eventStreams/duplicate_event.dart';
 import 'eventStreams/focus_event.dart';
 import 'eventStreams/redo_event.dart';
 import 'eventStreams/reset_event.dart';
@@ -23,6 +24,7 @@ class ShortcutsHandlers {
     ShortcutsActions.zoomIncrease: _zoomIncrease,
     ShortcutsActions.zoomDecrease: _zoomDecrease,
     ShortcutsActions.save: _save,
+    ShortcutsActions.duplicate: _duplicate,
     ShortcutsActions.color1: _color1,
     ShortcutsActions.color2: _color2,
     ShortcutsActions.color3: _color3,
@@ -72,6 +74,10 @@ class ShortcutsHandlers {
 
   static void _save() {
     SaveEvent.instance.addEvent(true);
+  }
+
+  static void _duplicate() {
+    DuplicateEvent.instance.addEvent(true);
   }
 
   static void _color1() {

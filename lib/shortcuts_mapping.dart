@@ -14,6 +14,7 @@ enum ShortcutsActions {
   zoomIncrease,
   zoomDecrease,
   save,
+  duplicate,
   color1,
   color2,
   color3,
@@ -41,9 +42,11 @@ class ShortcutsMapping {
     CharacterActivator("'"): ShortcutsActions.color4,
     SingleActivator(LogicalKeyboardKey.numpad5): ShortcutsActions.color5,
     CharacterActivator("("): ShortcutsActions.color5,
-    SingleActivator(LogicalKeyboardKey.numpadAdd, control: true):ShortcutsActions.zoomIncrease,
-    SingleActivator(LogicalKeyboardKey.numpadSubtract, control: true):ShortcutsActions.zoomDecrease,
-    SingleActivator(LogicalKeyboardKey.keyS, control: true):ShortcutsActions.save,
+    SingleActivator(LogicalKeyboardKey.numpadAdd, control: true): ShortcutsActions.zoomIncrease,
+    SingleActivator(LogicalKeyboardKey.numpadSubtract, control: true):
+        ShortcutsActions.zoomDecrease,
+    SingleActivator(LogicalKeyboardKey.keyS, control: true): ShortcutsActions.save,
+    SingleActivator(LogicalKeyboardKey.keyD, control: true): ShortcutsActions.duplicate,
   };
 
   static Map<ShortcutActivator, void Function()> get shortcutsMapping {
