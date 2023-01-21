@@ -37,15 +37,20 @@ class SelectedArea {
     return _area!.contains(point);
   }
 
+  void shiftArea(Offset drag) {
+    if (path == null || _area == null) return;
+    path = path!.shift(drag);
+    _area = _area!.shift(drag);
+  }
+
   void shift(Offset drag, List<SketchLine> sketchLines) {
-    if (path == null || _area == null || selectedPathsIndex == null) return;
+    if (selectedPathsIndex == null) return;
     for (final selectedPath in selectedPathsIndex!) {
       final sketchLine = sketchLines[selectedPath];
       final newPoints = sketchLine.points.map((point) => point + drag).toList();
       sketchLines[selectedPath] = SketchLine.from(sketchLine)..points = newPoints;
     }
-    path = path!.shift(drag);
-    _area = _area!.shift(drag);
+    shiftArea(drag);
   }
 
   void drawArea(Canvas canvas) {

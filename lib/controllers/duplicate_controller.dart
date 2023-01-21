@@ -21,7 +21,7 @@ class DuplicateController {
 
   void _handleEvent() {
     final selectedPaths = _selectedArea.selectedPathsIndex;
-    if (selectedPaths == null) return;
+    if (selectedPaths == null || selectedPaths.last >= _sketchLines.length) return;
 
     List<SketchLine> newSketchLines = List.from(_sketchLines);
     for (final selectedPath in selectedPaths) {

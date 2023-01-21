@@ -20,6 +20,7 @@ import 'package:sketcher/eventStreams/translation_event.dart';
 import 'package:sketcher/eventStreams/zoom_event.dart';
 import 'package:sketcher/sketch_line.dart';
 import 'package:sketcher/undo/current_point/current_point_undo_controller.dart';
+import 'package:sketcher/undo/duplicate/duplicate_undo_controller.dart';
 import 'package:sketcher/undo/selected_area_drag/selected_area_drag_undo_controller.dart';
 import 'controllers/drag_controller.dart';
 import 'controllers/draw_controller.dart';
@@ -50,6 +51,7 @@ void setupControllers() {
   SelectedPathsController.instance;
   SelectedAreaDragUndoController.instance;
   DuplicateController.instance;
+  DuplicateUndoController.instance;
 }
 
 class MyApp extends StatelessWidget {
