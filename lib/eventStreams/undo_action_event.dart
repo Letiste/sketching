@@ -1,4 +1,4 @@
-import 'package:sketcher/eventStreams/redo_action_event.dart';
+import 'package:sketching/eventStreams/redo_action_event.dart';
 
 import 'event_stream.dart';
 

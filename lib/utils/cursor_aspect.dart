@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sketcher/eventStreams/cursor_state_event.dart';
-import 'package:sketcher/eventStreams/mouse_button_state_event.dart';
+import 'package:sketching/eventStreams/cursor_state_event.dart';
+import 'package:sketching/eventStreams/mouse_button_state_event.dart';
 
 class CursorAspect {
   static Widget buildCursor(

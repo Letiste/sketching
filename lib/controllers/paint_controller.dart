@@ -1,11 +1,11 @@
 import 'dart:ui';
 
 import 'package:rxdart/rxdart.dart';
-import 'package:sketcher/eventStreams/cursor_state_event.dart';
-import 'package:sketcher/eventStreams/paint_state_event.dart';
-import 'package:sketcher/eventStreams/pencil_color_event.dart';
-import 'package:sketcher/utils/my_paint.dart';
-import 'package:sketcher/utils/tuple.dart';
+import 'package:sketching/eventStreams/cursor_state_event.dart';
+import 'package:sketching/eventStreams/paint_state_event.dart';
+import 'package:sketching/eventStreams/pencil_color_event.dart';
+import 'package:sketching/utils/my_paint.dart';
+import 'package:sketching/utils/tuple.dart';
 import '../eventStreams/zoom_event.dart';
 
 class PaintController {

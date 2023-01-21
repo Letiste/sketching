@@ -2,30 +2,30 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:sketcher/controllers/cursor_aspect_controller.dart';
-import 'package:sketcher/controllers/duplicate_controller.dart';
-import 'package:sketcher/controllers/focus_controller.dart';
-import 'package:sketcher/controllers/reset_controller.dart';
-import 'package:sketcher/controllers/paint_controller.dart';
-import 'package:sketcher/controllers/redo_controller.dart';
-import 'package:sketcher/controllers/save_controller.dart';
-import 'package:sketcher/controllers/save_file_controller.dart';
-import 'package:sketcher/controllers/selected_area_controller.dart';
-import 'package:sketcher/controllers/selected_area_cursor_controller.dart';
-import 'package:sketcher/controllers/selected_paths_controller.dart';
-import 'package:sketcher/controllers/undo_controller.dart';
-import 'package:sketcher/controllers/pencil_color_controller.dart';
-import 'package:sketcher/eventStreams/current_points_event.dart';
-import 'package:sketcher/eventStreams/translation_event.dart';
-import 'package:sketcher/eventStreams/zoom_event.dart';
-import 'package:sketcher/sketch_line.dart';
-import 'package:sketcher/undo/current_point/current_point_undo_controller.dart';
-import 'package:sketcher/undo/duplicate/duplicate_undo_controller.dart';
-import 'package:sketcher/undo/selected_area_drag/selected_area_drag_undo_controller.dart';
+import 'package:sketching/controllers/cursor_aspect_controller.dart';
+import 'package:sketching/controllers/duplicate_controller.dart';
+import 'package:sketching/controllers/focus_controller.dart';
+import 'package:sketching/controllers/reset_controller.dart';
+import 'package:sketching/controllers/paint_controller.dart';
+import 'package:sketching/controllers/redo_controller.dart';
+import 'package:sketching/controllers/save_controller.dart';
+import 'package:sketching/controllers/save_file_controller.dart';
+import 'package:sketching/controllers/selected_area_controller.dart';
+import 'package:sketching/controllers/selected_area_cursor_controller.dart';
+import 'package:sketching/controllers/selected_paths_controller.dart';
+import 'package:sketching/controllers/undo_controller.dart';
+import 'package:sketching/controllers/pencil_color_controller.dart';
+import 'package:sketching/eventStreams/current_points_event.dart';
+import 'package:sketching/eventStreams/translation_event.dart';
+import 'package:sketching/eventStreams/zoom_event.dart';
+import 'package:sketching/sketch_line.dart';
+import 'package:sketching/undo/current_point/current_point_undo_controller.dart';
+import 'package:sketching/undo/duplicate/duplicate_undo_controller.dart';
+import 'package:sketching/undo/selected_area_drag/selected_area_drag_undo_controller.dart';
 import 'controllers/drag_controller.dart';
 import 'controllers/draw_controller.dart';
 import 'controllers/zoom_controller.dart';
-import 'sketcher.dart';
+import 'sketching.dart';
 
 void main(List<String> args) {
   setupControllers();
@@ -82,7 +82,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Sketcher(),
+      home: Sketching(),
     );
   }
 }

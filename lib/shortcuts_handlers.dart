@@ -1,7 +1,7 @@
-import 'package:sketcher/config/paint_colors.dart';
-import 'package:sketcher/eventStreams/pencil_color_event.dart';
-import 'package:sketcher/eventStreams/zoom_change_event.dart';
-import 'package:sketcher/shortcuts_mapping.dart';
+import 'package:sketching/config/paint_colors.dart';
+import 'package:sketching/eventStreams/pencil_color_event.dart';
+import 'package:sketching/eventStreams/zoom_change_event.dart';
+import 'package:sketching/shortcuts_mapping.dart';
 
 import 'eventStreams/duplicate_event.dart';
 import 'eventStreams/focus_event.dart';

@@ -1,5 +1,5 @@
-import 'package:sketcher/eventStreams/cursor_state_event.dart';
-import 'package:sketcher/eventStreams/pencil_color_event.dart';
+import 'package:sketching/eventStreams/cursor_state_event.dart';
+import 'package:sketching/eventStreams/pencil_color_event.dart';
 
 class PencilColorController {
   static void instance = PencilColorController._privateController();

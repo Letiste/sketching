@@ -1,4 +1,4 @@
-import 'package:sketcher/selected_area.dart';
+import 'package:sketching/selected_area.dart';
 
 import 'event_stream.dart';
 

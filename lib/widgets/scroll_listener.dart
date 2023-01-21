@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:sketcher/eventStreams/mouse_position_event.dart';
-import 'package:sketcher/eventStreams/zoom_change_event.dart';
+import 'package:sketching/eventStreams/mouse_position_event.dart';
+import 'package:sketching/eventStreams/zoom_change_event.dart';
 
 import '../eventStreams/mouse_button_state_event.dart';
 

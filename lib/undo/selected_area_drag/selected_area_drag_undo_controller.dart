@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:sketcher/eventStreams/redo_action_event.dart';
-import 'package:sketcher/eventStreams/selected_area_event.dart';
-import 'package:sketcher/eventStreams/undo_action_event.dart';
-import 'package:sketcher/eventStreams/zoom_event.dart';
-import 'package:sketcher/selected_area.dart';
-import 'package:sketcher/sketch_line.dart';
-import 'package:sketcher/undo/selected_area_drag/selected_area_drag_undo_action.dart';
+import 'package:sketching/eventStreams/redo_action_event.dart';
+import 'package:sketching/eventStreams/selected_area_event.dart';
+import 'package:sketching/eventStreams/undo_action_event.dart';
+import 'package:sketching/eventStreams/zoom_event.dart';
+import 'package:sketching/selected_area.dart';
+import 'package:sketching/sketch_line.dart';
+import 'package:sketching/undo/selected_area_drag/selected_area_drag_undo_action.dart';
 
 import '../../eventStreams/current_points_event.dart';
 import '../../eventStreams/cursor_state_event.dart';

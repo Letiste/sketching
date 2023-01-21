@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:sketcher/eventStreams/paint_state_event.dart';
+import 'package:sketching/eventStreams/paint_state_event.dart';
 
 import '../eventStreams/current_points_event.dart';
 import '../eventStreams/cursor_state_event.dart';

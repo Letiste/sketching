@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:sketcher/eventStreams/cursor_state_event.dart';
-import 'package:sketcher/eventStreams/mouse_button_state_event.dart';
-import 'package:sketcher/eventStreams/mouse_position_event.dart';
-import 'package:sketcher/eventStreams/selected_area_event.dart';
-import 'package:sketcher/selected_area.dart';
-import 'package:sketcher/utils/tuple.dart';
+import 'package:sketching/eventStreams/cursor_state_event.dart';
+import 'package:sketching/eventStreams/mouse_button_state_event.dart';
+import 'package:sketching/eventStreams/mouse_position_event.dart';
+import 'package:sketching/eventStreams/selected_area_event.dart';
+import 'package:sketching/selected_area.dart';
+import 'package:sketching/utils/tuple.dart';
 
 import '../eventStreams/translation_event.dart';
 import '../eventStreams/zoom_event.dart';

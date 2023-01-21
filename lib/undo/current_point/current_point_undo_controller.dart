@@ -1,8 +1,8 @@
 import 'package:rxdart/rxdart.dart';
-import 'package:sketcher/eventStreams/redo_action_event.dart';
-import 'package:sketcher/eventStreams/undo_action_event.dart';
-import 'package:sketcher/sketch_line.dart';
-import 'package:sketcher/undo/current_point/current_points_undo_action.dart';
+import 'package:sketching/eventStreams/redo_action_event.dart';
+import 'package:sketching/eventStreams/undo_action_event.dart';
+import 'package:sketching/sketch_line.dart';
+import 'package:sketching/undo/current_point/current_points_undo_action.dart';
 
 import '../../eventStreams/current_points_event.dart';
 import '../../eventStreams/cursor_state_event.dart';

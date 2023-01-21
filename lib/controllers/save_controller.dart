@@ -1,6 +1,6 @@
 import 'package:file_picker/file_picker.dart';
-import 'package:sketcher/eventStreams/save_event.dart';
-import 'package:sketcher/eventStreams/save_file_event.dart';
+import 'package:sketching/eventStreams/save_event.dart';
+import 'package:sketching/eventStreams/save_file_event.dart';
 
 class SaveController {
   static void instance = SaveController._privateController();

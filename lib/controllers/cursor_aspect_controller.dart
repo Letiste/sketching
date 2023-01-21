@@ -1,11 +1,11 @@
 import 'dart:ui';
 
 import 'package:rxdart/rxdart.dart';
-import 'package:sketcher/eventStreams/cursor_aspect_event.dart';
-import 'package:sketcher/eventStreams/cursor_state_event.dart';
-import 'package:sketcher/eventStreams/mouse_on_screen_event.dart';
-import 'package:sketcher/eventStreams/pencil_color_event.dart';
-import 'package:sketcher/utils/cursor_aspect.dart';
+import 'package:sketching/eventStreams/cursor_aspect_event.dart';
+import 'package:sketching/eventStreams/cursor_state_event.dart';
+import 'package:sketching/eventStreams/mouse_on_screen_event.dart';
+import 'package:sketching/eventStreams/pencil_color_event.dart';
+import 'package:sketching/utils/cursor_aspect.dart';
 
 import '../eventStreams/mouse_button_state_event.dart';
 import '../utils/tuple.dart';

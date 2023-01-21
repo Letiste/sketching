@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/services.dart';
-import 'package:sketcher/shortcuts_handlers.dart';
+import 'package:sketching/shortcuts_handlers.dart';
 
 enum ShortcutsActions {
   reset,

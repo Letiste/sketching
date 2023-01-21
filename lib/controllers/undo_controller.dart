@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:sketcher/eventStreams/redo_action_event.dart';
-import 'package:sketcher/eventStreams/undo_action_event.dart';
-import 'package:sketcher/eventStreams/undo_event.dart';
+import 'package:sketching/eventStreams/redo_action_event.dart';
+import 'package:sketching/eventStreams/undo_action_event.dart';
+import 'package:sketching/eventStreams/undo_event.dart';
 
 class UndoController {
   late List<UndoAction> _undoActions;

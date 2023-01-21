@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide MenuItem;
 import 'package:native_context_menu/native_context_menu.dart';
-import 'package:sketcher/config/paint_colors.dart';
-import 'package:sketcher/eventStreams/pencil_color_event.dart';
+import 'package:sketching/config/paint_colors.dart';
+import 'package:sketching/eventStreams/pencil_color_event.dart';
 
 import '../eventStreams/cursor_state_event.dart';
 

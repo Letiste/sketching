@@ -1,4 +1,4 @@
-# sketcher
+# sketching
 
 A new Flutter project.
 

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart/streams.dart';
-import 'package:sketcher/eventStreams/cursor_aspect_event.dart';
-import 'package:sketcher/eventStreams/mouse_on_screen_event.dart';
-import 'package:sketcher/eventStreams/mouse_position_event.dart';
-import 'package:sketcher/eventStreams/current_points_event.dart';
-import 'package:sketcher/eventStreams/selected_area_event.dart';
-import 'package:sketcher/selected_area.dart';
-import 'package:sketcher/shortcuts_mapping.dart';
-import 'package:sketcher/widgets/context_menu.dart';
+import 'package:sketching/eventStreams/cursor_aspect_event.dart';
+import 'package:sketching/eventStreams/mouse_on_screen_event.dart';
+import 'package:sketching/eventStreams/mouse_position_event.dart';
+import 'package:sketching/eventStreams/current_points_event.dart';
+import 'package:sketching/eventStreams/selected_area_event.dart';
+import 'package:sketching/selected_area.dart';
+import 'package:sketching/shortcuts_mapping.dart';
+import 'package:sketching/widgets/context_menu.dart';
 import 'eventStreams/translation_event.dart';
 import 'eventStreams/zoom_event.dart';
 import 'my_painter.dart';
@@ -16,7 +16,7 @@ import 'utils/tuple.dart';
 import 'widgets/pan_listener.dart';
 import 'widgets/scroll_listener.dart';
 
-class Sketcher extends StatelessWidget {
+class Sketching extends StatelessWidget {
   final dynamic stream = CombineLatestStream.combine4(
     ZoomEvent.instance.stream,
     TranslationEvent.instance.stream,
@@ -26,7 +26,7 @@ class Sketcher extends StatelessWidget {
         [zoom, translation, currentPoints, selectedArea],
   );
 
-  Sketcher({super.key});
+  Sketching({super.key});
 
   @override
   Widget build(BuildContext context) {

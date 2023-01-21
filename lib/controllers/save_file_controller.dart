@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/animation.dart';
-import 'package:sketcher/eventStreams/save_file_event.dart';
-import 'package:sketcher/eventStreams/translation_event.dart';
-import 'package:sketcher/eventStreams/zoom_event.dart';
+import 'package:sketching/eventStreams/save_file_event.dart';
+import 'package:sketching/eventStreams/translation_event.dart';
+import 'package:sketching/eventStreams/zoom_event.dart';
 
 import '../eventStreams/current_points_event.dart';
 import '../sketch_line.dart';

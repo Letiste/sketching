@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
-import 'package:sketcher/eventStreams/mouse_position_event.dart';
-import 'package:sketcher/eventStreams/zoom_change_event.dart';
+import 'package:sketching/eventStreams/mouse_position_event.dart';
+import 'package:sketching/eventStreams/zoom_change_event.dart';
 import '../eventStreams/translation_event.dart';
 import '../eventStreams/zoom_event.dart';
 

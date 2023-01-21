@@ -1,4 +1,4 @@
-import 'package:sketcher/utils/my_paint.dart';
+import 'package:sketching/utils/my_paint.dart';
 
 import 'event_stream.dart';
 
