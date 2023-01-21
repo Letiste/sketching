@@ -52,6 +52,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  msix: ^3.7.0
+  flutter_launcher_icons: ^0.11.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -94,3 +96,18 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+msix_config:
+  display_name: Sketching
+  publisher_display_name: Letiste
+  publisher: CN=1918B8E8-A468-4235-BCFD-E1895193961E
+  identity_name: 62850Letiste.Sketching
+  msix_version: 1.0.0.0
+  logo_path: ./logo.png
+  store: true
+
+flutter_icons:
+  windows:
+    generate: true
+    image_path: "./logo.png"
+    icon_size: 256
